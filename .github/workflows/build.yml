@@ -57,9 +57,11 @@ jobs:
         run: |
           echo "Publishing CV for language: no"
           cp -r ./generated_site ./docs/
-          git add docs/
-          git commit -m"Publishing CV for language: no"
-          git push
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add docs/*
+          git commit -m "Update docs directory"
+          git push origin main
 
       - name: Create zip archive of source site
         run: |
