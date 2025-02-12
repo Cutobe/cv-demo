@@ -1,0 +1,13 @@
+{% assign education = site.data.data.education %}
+{% assign titles = site.data.data.static.titles %}
+
+{% if education %}
+<span class="header right-aligned">{{ titles.education }}</span><br>
+{% for degree in education.degrees %}
+<p>
+	<span class="medium-header right-aligned">{{ degree.title }}</span><br>
+	<span class="mini-header right-aligned">{{ degree.institution }}</span><br>
+	<span class="mini-header right-aligned">{{ degree.start }} - {{ degree.end }}</span><br>
+</p>
+{% endfor %}
+{% endif %}

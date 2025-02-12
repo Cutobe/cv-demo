@@ -1,0 +1,28 @@
+{% assign personal_info = site.data.data.personal_info %}
+<div>
+	<img src="{{ personal_info.avatar }}" class="round-image centered"/>
+</div>
+<div>
+	<span class="headline">{{ personal_info.first_name }}</span><br/>
+	<span class="headline">{{ personal_info.last_name }}</span><br />
+	<hr />
+	<span class="sub-headline">{{ personal_info.profession }}</span>
+</div>
+<div class="introduction">
+	{{ personal_info.introduction }}
+</div>
+<div>
+	<div>
+		{% include education.html %}
+	</div>
+	<div>
+		{% include skills.html %}
+	</div>
+	<div>
+		{% include contact.html %}
+	</div>
+</div>
+<div>
+	{% include employments.html %}
+	<hr class="bottom">
+</div>

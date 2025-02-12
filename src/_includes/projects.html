@@ -1,0 +1,80 @@
+{% assign projects = site.data.data.projects %}
+{% assign titles = site.data.data.static.titles %} {% if projects %}
+<script>
+  let currentPageIndex = 0;
+
+  function createPage() {
+    currentPageIndex += 1;
+
+    const page = document.createElement('Page');
+    page.setAttribute('size', 'A4');
+    page.id = `project-page-${currentPageIndex}`
+
+    const div = document.createElement('div');
+    div.classList.add('projects');
+
+    page.appendChild(div);
+
+    return page;
+  }
+
+  function createContentDiv(content) {
+      const contentDiv = document.createElement('div');
+      contentDiv.classList.add('project');
+      contentDiv.innerHTML = content;
+      return contentDiv;
+  }
+
+  function getPageContent(page) {
+    return page.querySelector('.projects');
+  }
+
+  function paginateContent(content) {
+      const container = document.querySelector('#cv');
+
+      let currentPage = document.querySelector(`#project-page-${currentPageIndex}`);
+      let pageContent = getPageContent(currentPage);
+      
+      const contentDiv = createContentDiv(content);
+      pageContent.appendChild(contentDiv);
+
+      if (pageContent.scrollHeight > pageContent.clientHeight) {
+          // Remove the last added content div
+          pageContent.removeChild(pageContent.lastChild);
+
+          // Create a new page and add the content to it
+          currentPage = createPage();
+          getPageContent(currentPage).appendChild(contentDiv);
+
+          container.appendChild(currentPage);
+      }
+  }
+</script>
+
+<Page size="A4" id="project-page-0">
+  <div class="projects">
+    <span class="header">{{ titles.projects }}</span><br>
+    <hr>
+
+    {% for project in projects.list %}
+    <script>
+      /*
+       * CSS cannot move content to a new Page, so we let JS handle the content which Jekyll has processed.
+       * It is important that the following HTML is already present before calling paginateContent:
+       * 
+       * <Page size="A4" id="project-page-0">
+       *   <div class="projects">
+       */
+      paginateContent(`
+        <span class="medium-header">{{ project.title }}</span><br>
+        <span class="mini-header">{{ project.company }} | {{ project.start }} – {{ project.end }}</span><br>
+        <div class="project-description">
+          {{ project.description | markdownify }}
+          <span class="project-tech">{{ titles.technologies }}: {{ project.techstack }}</span>
+        </div>`
+      );
+    </script>
+    {% endfor %}
+  </div>
+</Page>
+{% endif %}

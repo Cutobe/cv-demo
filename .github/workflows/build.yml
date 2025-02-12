@@ -1,0 +1,121 @@
+name: Render CV
+
+on:
+  push:
+    branches:
+      - main  # Trigger the build on push to the main branch
+  workflow_dispatch:
+    inputs:
+      language:
+        description: 'Language to render the CV with'
+        required: true
+        default: '"no"'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        language: ${{ fromJSON(format('[{0}]', inputs.language || '"en","sv","no"')) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'  # Specify the Ruby version
+
+      - name: Install yq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y yq
+
+      - name: Install dependencies
+        run: |
+          cd src
+          gem install bundler
+          bundle install
+
+      - name: Copy correct language files
+        run: |
+          cd src/_data
+          cp "data_${{ matrix.language }}.yml" data.yml
+
+      # Build static site
+      - name: Build the Jekyll site
+        run: |
+          cd src
+          bundle exec jekyll build --source . --destination ../generated_site
+
+      - name: Create zip archive of source site
+        run: |
+          zip -r generated-source-${{ matrix.language }}.zip generated_site
+
+      # Generate pdf
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'latest'
+
+      - name: Copy pdf-gen contents
+        run: cp -r pdf-gen/* generated_site/
+
+      - name: Install pdf-gen dependencies
+        run: |
+          cd generated_site
+          npm install
+
+      - name: Start HTTP server
+        run: |
+          cd generated_site
+          npx http-server . -p 8000 &
+        env:
+          CI: true
+
+      - name: Wait for the server to start
+        run: sleep 5
+
+      - name: Generate PDF with Puppeteer
+        run: |
+          cd generated_site
+          node generate-pdf.js
+
+      # Generate docx
+      - name: Copy data files to docx-gen directory
+        run: cp -r src/_data docx-gen
+
+      - name: Install docx-gen dependencies
+        run: |
+          cd docx-gen
+          npm install
+
+      - name: Generate docx
+        run: |
+          cd docx-gen
+          node generate-docx.js
+
+      # Upload files to release
+      - name: Install GitHub CLI
+        run: sudo apt-get install gh
+
+      - name: Extract first and last name from YAML
+        id: extract_names
+        run: |
+          first_name=$(yq eval '.personal_info.first_name' src/_data/data.yml)
+          last_name=$(yq eval '.personal_info.last_name' src/_data/data.yml)
+          echo "FIRST_NAME=$first_name" >> $GITHUB_ENV
+          echo "LAST_NAME=$last_name" >> $GITHUB_ENV
+
+      - name: Upload to Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mv "./generated_site/cv.pdf" "./generated_site/CV $FIRST_NAME $LAST_NAME $(date +%Y) ${{ matrix.language }}.pdf"
+          mv "./docx-gen/cv.docx" "./docx-gen/CV $FIRST_NAME $LAST_NAME $(date +%Y) ${{ matrix.language }}.docx"
+          gh release view latest-${{ matrix.language }} || gh release create latest-${{ matrix.language }} --notes "Latest CV for ${{ matrix.language }}"
+          gh release upload latest-${{ matrix.language }} "./generated_site/CV $FIRST_NAME $LAST_NAME $(date +%Y) ${{ matrix.language }}.pdf" --clobber
+          gh release upload latest-${{ matrix.language }} "./docx-gen/CV $FIRST_NAME $LAST_NAME $(date +%Y) ${{ matrix.language }}.docx" --clobber
+          gh release upload latest-${{ matrix.language }} generated-source-${{ matrix.language }}.zip --clobber

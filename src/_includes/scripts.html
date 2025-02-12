@@ -1,0 +1,68 @@
+{% assign personal_info = site.data.data.personal_info %}
+<script src="assets/scripts/jquery.3.7.1.js"></script>
+<script src="assets/scripts/jspdf.umd.2.5.1.js"></script>
+<script src="assets/scripts/html2canvas.1.4.1.js"></script>
+<script>
+	function printCv() {
+		const generateButton = document.getElementById('generate-cv');
+
+		generateButton.innerText = 'Generating pdf...';
+		generateButton.disabled = true;
+
+		generateCv(doc => {
+			doc.save(`CV {{ personal_info.first_name }} {{ personal_info.last_name }} ${new Date().getFullYear()}.pdf`);
+			generateButton.innerText = 'Print';
+			generateButton.disabled = false;
+		});
+	}
+	
+	async function generateCvAsBase64() {
+		return new Promise((resolve, reject) => {
+			generateCv((doc) => {
+				try {
+					resolve(doc.output('datauristring'));
+				} catch (error) {
+					reject(error);
+				}
+			});
+		});
+	}
+	
+	function generateCv(callback) {
+		const { jsPDF } = window.jspdf;
+		
+		const doc = new jsPDF('p', 'mm', 'a4', true);
+		const pageWidth = doc.internal.pageSize.getWidth();
+		const pageHeight = doc.internal.pageSize.getHeight();
+
+		var pageCanvases = Array.from(document.querySelectorAll('Page'))
+			.map(page => html2canvas(page, {scale: 5}));
+
+		Promise.all(pageCanvases).then(pages => {
+			pages.forEach((page, index) => {
+				doc.addImage(page, 'PNG', 0, 0, pageWidth, pageHeight, undefined, 'FAST');
+			    if (index < pages.length-1) {
+			    	doc.addPage();
+			    }
+			});
+			
+			callback(doc);
+		});
+	}
+
+	function docReady(fn) {
+	    // see if DOM is already available
+	    if (document.readyState === "complete" || document.readyState === "interactive") {
+	        // call on next available tick
+	        setTimeout(fn, 1);
+	    } else {
+	        document.addEventListener("DOMContentLoaded", fn);
+	    }
+	}
+
+	docReady(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		const printFlag = urlParams.get('print');
+		document.getElementById('generate-cv').style.visibility = printFlag !== null ? 'visible' : 'hidden';
+	});    		
+</script>

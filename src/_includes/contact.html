@@ -1,0 +1,13 @@
+{% assign contact_info = site.data.data.contact_info %}
+{% assign titles = site.data.data.static.titles %}
+
+{% if contact_info %}
+	<span class="header right-aligned">{{ titles.contact }}</span><br>
+
+	{% for contact in contact_info.list %}
+	<p>
+		<span class="medium-header right-aligned">{{ contact.title }}</span><br>
+		<span class="mini-header right-aligned">{{ contact.value }}</span><br>
+	</p>
+	{% endfor %}
+{% endif %}

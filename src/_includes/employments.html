@@ -1,0 +1,15 @@
+{% assign employments = site.data.data.employments %}
+{% assign titles = site.data.data.static.titles %}
+
+{% if employments %}
+	<span class="header">{{ titles.employments }}</span><br>
+	<hr>
+
+	{% for employment in employments.list %}
+	<p class="employment">
+		<span class="medium-header">{{ employment.company }}</span><br>
+		<span class="medium-header">{{ employment.start }} - {{ employment.end }}</span><br>
+		<span class="thin-header">{{ employment.description }}</span><br>
+	</p>
+	{% endfor %}
+{% endif %}

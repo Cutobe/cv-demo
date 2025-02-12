@@ -1,0 +1,121 @@
+#
+# Be aware that even a small syntax error here can lead to failures in output.
+#
+
+personal_info:
+  avatar: assets/images/avatar.jpg
+  first_name: Eirik
+  last_name: Lundberg
+  profession: Fullstack-utvecklare
+  introduction: |
+    Eirik Lundberg är en erfaren utvecklare från Oslo med en passion för moderna webbteknologier och distribuerade system. Han har en examen i datavetenskap från NTNU i Trondheim och har arbetat som fullstack-utvecklare i över sju år. Med en stark bakgrund inom både frontend och backend har han bidragit till flera stora SaaS-projekt inom fintech och e-handel. På fritiden gillar han att vandra i de norska fjällen och experimentera med open-source-projekt.
+
+education:
+  degrees:
+    - title: Bachelor i datateknologi
+      institution: NTNU Trondheim
+      start: 2012
+      end: 2015
+    - title: "Master: Maskininlæring"
+      institution: NTNU Trondheim
+      start: 2015
+      end: 2017
+
+skills:
+  list:
+    - Python, TypeScript
+    - React, Next.js, Node.js
+    - PostgreSQL, MongoDB
+    - AWS (Lambda, EC2, S3)
+    - Docker, Kubernetes
+    - TensorFlow, PyTorch
+    - GitHub Actions, Jenkins
+    - Scrum, Kanban
+contact_info:
+  list:
+    - title: Telefon
+      value: +47 999 99 999
+    - title: Email
+      value: eirik.lundberg@fiktiv.no
+
+employments:
+  list:
+    - company: Nordic Tech Solutions
+      description: Leder utvecklingen av en skalbar SaaS-plattform för fintech och ansvarar för arkitektur och teknisk vägledning inom teamet
+      start: 2022
+      end: ""
+    - company: SkandiAI
+      description: Utvecklade och implementerade maskininlärningsmodeller för bildanalys och NLP i medicinska tillämpningar
+      start: 2019
+      end: 2022
+    - company: Fjordsoft
+      description: Byggde moderna webbapplikationer med React och Spring Boot för kunder inom e-handel och logistik
+      start: 2017
+      end: 2019
+    - company: InnoData
+      description: Arbetade med datahantering och automatisering av ETL-processer under sin utbildning
+      start: 2012
+      end: 2017
+
+projects:
+  list:
+    - title: "Lead Fullstack Developer"
+      company: "Nordic Tech Solutions"
+      start: "2022"
+      end: ""
+      description: |
+        Eirik leder utvecklingen av en skalbar SaaS-plattform för fintech som används av banker och betaltjänstleverantörer. Han ansvarar för systemarkitektur och teknisk vägledning inom teamet, med fokus på mikrotjänster och distribuerade system i en molnbaserad miljö.
+        Han har implementerat lösningar med React och TypeScript på frontend samt Spring Boot och Kotlin på backend. Han har optimerat API-prestanda och infört GraphQL för mer flexibla dataförfrågningar.
+
+        Exempel på arbete:
+
+        * Designade och implementerade en ny GraphQL-baserad API-struktur för effektivare datainhämtning.
+        * Migrerade ett äldre system från monolit till mikrotjänster, vilket förbättrade skalbarhet och underhållbarhet.
+
+        Han driver även initiativ för DevOps och CI/CD genom Kubernetes och GitHub Actions.
+      techstack: "Kotlin, Spring Boot, React, TypeScript, GraphQL, PostgreSQL, AWS, Kubernetes, GitHub Actions"
+    - title: "Machine Learning Engineer"
+      company: "SkandiAI"
+      start: "2022"
+      end: "2019"
+      description: |
+        Eirik utvecklade och implementerade maskininlärningsmodeller för bildanalys och NLP inom medicinska tillämpningar. Han arbetade med att träna deep learning-modeller för att automatiskt identifiera anomalier i röntgenbilder, vilket ledde till en 25 % högre träffsäkerhet jämfört med tidigare metoder.
+
+        Exempel på arbete:
+
+        * Utvecklade och tränade CNN-modeller för att klassificera och identifiera medicinska bilder.
+        * Förbättrade förbearbetning av bilddata, vilket minskade beräkningstiden med 30 %.
+        * Implementerade en hybridmodell som kombinerade traditionell bildbehandling med deep learning.
+        * Skapade en intern dashboard för att visualisera modellprestanda och felanalyser.
+        
+        Han byggde även en chatbot baserad på NLP för patientkommunikation, vilket effektiviserade kundsupportprocessen. Han använde TensorFlow, PyTorch och AWS Lambda för att driftsätta modeller i produktionsmiljöer.
+      techstack: "Python, TensorFlow, PyTorch, NLP, AWS Lambda, FastAPI, PostgreSQL, Docker"
+    - title: "Fullstack-utvecklare"
+      company: "FjordSoft"
+      start: "2017"
+      end: "2019"
+      description: |
+        Eirik byggde moderna webbapplikationer för kunder inom e-handel och logistik. Han ansvarade för att utveckla RESTful API:er med Spring Boot samt skapa responsiva gränssnitt i React. 
+
+        Han införde också ett nytt cache-lager med Redis som minskade sidladdningstider med 40%. Han deltog i agil utveckling med Scrum och arbetade nära kunder för att anpassa lösningar efter deras behov.
+
+        Under sin tid på FjordSoft arbetade han med att migrera ett äldre monolitiskt system till en mer modulär mikrotjänstarkitektur. Han designade och implementerade nya API:er, vilket möjliggjorde enklare integrationer med externa tjänster. Genom att använda PostgreSQL och indexoptimering lyckades han förbättra databasprestandan avsevärt.
+
+        Eirik var även ansvarig för att införa enhetstester och kodgranskning i utvecklingsprocessen, vilket förbättrade kodkvaliteten och minskade antalet buggar i produktionen. Han höll regelbundna tekniska workshops för teamet, där han delade insikter om best practices och nya teknologier.
+      techstack: "Java, Spring Boot, React, Redux, PostgreSQL, Redis, Docker, Jenkins"
+    - title: "Software Developer (Deltid)"
+      company: "InnoData"
+      start: "2012"
+      end: "2017"
+      description: |
+        Eirik arbetade med datahantering och automatisering av ETL-processer under sin utbildning. Han skapade skript i Python för att processa stora dataset och förbättrade en databasmodell som optimerade lagring av sensorinformation.
+      techstack: "Python, Pandas, PostgreSQL, ETL, Apache Airflow"
+
+static:
+  titles:
+    skills: Kompetens
+    employments: Anställningar
+    education: Utbildning
+    contact: Kontakt
+    technologies: Teknik
+    projects: Referensprojekt

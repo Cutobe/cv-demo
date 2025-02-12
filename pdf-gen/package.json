@@ -1,0 +1,17 @@
+{
+    "name": "generate-pdf",
+    "version": "1.0.0",
+    "description": "Generate static pdf from site",
+    "main": "generate-pdf.js",
+    "scripts":
+    {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies":
+    {
+        "puppeteer": "^23.9.0",
+        "http-server": "^14.1.1"
+    }
+}

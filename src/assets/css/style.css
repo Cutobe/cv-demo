@@ -1,0 +1,181 @@
+body {
+  background: rgb(204,204,204);
+  font-family: "Raleway", Tahoma, "Trebuchet MS", sans-serif;
+}
+
+Page[size="A4"] {
+  background: white;
+  width: 21cm;
+  height: 29.7cm;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+}
+
+@media print {
+  body, Page[size="A4"] {
+    margin: 0;
+    box-shadow: 0;
+  }
+}
+
+MainPage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 2fr 2fr 6fr;
+  height: 100%;
+  padding: 25px 25px 25px 25px;
+}
+
+MainPage > *:nth-child(1) {
+  align-self: end;
+  justify-self: end;
+  padding: 10px;
+}
+
+MainPage > *:nth-child(2) {
+  grid-column-start: span 2;
+  align-self: end;
+  padding: 10px;
+}
+
+MainPage > *:nth-child(3) {
+  grid-column-start: span 3;
+  margin: 25px 25px 50px 25px;
+}
+
+MainPage > *:nth-child(4) {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80%;
+  margin-left: 25px;
+  margin-right: 10px;
+}
+
+MainPage > *:nth-child(5) {
+  grid-column-start: span 2;
+  margin-left: 10px;
+}
+
+ul.right-aligned > li {
+  float: right;
+  list-style-type: none;
+  padding-bottom: 5px;
+  font-size: small;
+}
+
+.left-aligned {
+  float: left;
+}
+
+.right-aligned {
+  float: right;
+  text-align: right;
+}
+
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bottom {
+}
+
+.round-image {
+  border-radius: 50%;
+  width: 80%; 
+  height: auto;
+}
+
+.introduction{
+  line-height: 1.4;
+}
+
+.header {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.medium-header {
+  font-weight: bold;
+  font-size: small;
+}
+
+.mini-header {
+  font-size: small;
+}
+
+.thin-header {
+  font-size: small;
+  font-weight: 300;
+}
+
+.headline {
+  font-variant: small-caps;
+  font-size: 38px;
+}
+
+.sub-headline {
+  color: grey;
+}
+
+.employment {
+  margin-top: 10px;
+  padding-bottom: 10px;
+}
+
+.projects {
+  height: 100%;
+  padding: 50px 50px 10px 50px;
+  font-size: 14px;
+}
+
+.project {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  font-size: 14px;
+}
+
+.projects > .header {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+
+.project > .medium-header {
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.project > .mini-header {
+  font-size: 1.1em;
+}
+
+.project > .thin-header {
+  font-size: 1.1em;
+  font-weight: 300;
+}
+
+.project-description {
+  margin-left: 10px;
+}
+
+.project-tech {
+  font-size: 1em;
+  font-weight: 300;
+  font-style: italic;
+}
+
+hr {
+  height: 2px;
+  border: 0;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+#generate-cv {
+  visibility: hidden;
+}
