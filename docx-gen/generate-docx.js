@@ -27,43 +27,6 @@ async function createCircularImage(inputPath, outputPath, size) {
     .toFile(outputPath);
 }
 
-function projectSizeInMm(project) {
-    const headerAndSubHeaderSize = 17;
-    const technologiesSize = 12;
-    const lineSize = 4.5;
-    const averageCharactersPerLine = 85;
-
-    const totalLinesSize = project.description.split('\n')
-        .map(line => Math.ceil(line.length / averageCharactersPerLine))
-        .map(numberOfLines => (numberOfLines + 1) * lineSize) // +1 => break after last word in paragraåh
-        .reduce((a,b) => a+b, 0);
-
-    const totalTechnologiesSize = technologiesSize + (project.techstack.length >= averageCharactersPerLine ? lineSize : 0);
-    return headerAndSubHeaderSize + totalLinesSize + totalTechnologiesSize;
-}
-
-function pageify(projects) {
-    let currentHeight = 30; // First page has a title
-    const startHeightPage2Onwards = 15;
-    const maxHeight = 260;
-    for (let i = 0; i<projects.length; i++) {
-        let pSize = projectSizeInMm(projects[i])* 0.9;
-        console.log(pSize);
-        currentHeight += pSize;
-        console.log("current "+currentHeight);
-        if (currentHeight > maxHeight) {
-            projects[i-1].pageBreak = '<w:p><w:r><w:br w:type="page"/></w:r></w:p>';
-            console.log("----");
-            currentHeight = startHeightPage2Onwards + pSize;
-
-        console.log("current "+currentHeight);
-        } else {
-            projects[i].pageBreak = '<w:br/>';
-        }
-    }
-    return projects;
-}
-
 const PROFILE_PICTURE_SIZE = 182;
 
 (async () => {
@@ -91,7 +54,7 @@ const PROFILE_PICTURE_SIZE = 182;
     });
 
     const cvData = toYaml('_data/data.yml');
-    const titles = cvData.static;
+    const titles = cvData.static.titles;
 
     doc.render({
         skillsTitle: titles.skills,
@@ -115,7 +78,7 @@ const PROFILE_PICTURE_SIZE = 182;
 
         employments: [...cvData.employments.list],
 
-        projects: pageify([...cvData.projects.list]),
+        projects: [...cvData.projects.list].map((project, index) => ({...project, 'pageBreak': index % 2 == 1 ? '<w:p><w:r><w:br w:type="page"/></w:r></w:p>' : '<w:br/>'})),
     });
 
     const buffer = doc.getZip().generate({ type: 'nodebuffer' });
@@ -124,3 +87,4 @@ const PROFILE_PICTURE_SIZE = 182;
 
     console.log('Document generated successfully: cv.docx');
 })();
+
