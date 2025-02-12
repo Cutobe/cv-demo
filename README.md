@@ -13,7 +13,7 @@ Changes *_data/data.yml* will be visible after a while.
 ## Local machine
 
 ```bash
-git clone https://github.com/Miicroo/cv.git
+git clone https://github.com/Miicroo/cv-demo.git
 ```
 
 * Install required ruby gems
