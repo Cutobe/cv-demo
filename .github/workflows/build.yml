@@ -57,6 +57,9 @@ jobs:
         run: |
           echo "Publishing CV for language: no"
           cp -r ./generated_site ./docs/
+          git add docs/
+          git commit -m"Publishing CV for language: no"
+          git push
 
       - name: Create zip archive of source site
         run: |
