@@ -52,6 +52,12 @@ jobs:
           cd src
           bundle exec jekyll build --source . --destination ../generated_site
 
+      - name: Copy to docs if language is "no"
+        if: ${{ matrix.language == 'no' }}  # Conditional check
+        run: |
+          echo "Publishing CV for language: no"
+          cp -r ./generated_site ./docs/
+
       - name: Create zip archive of source site
         run: |
           zip -r generated-source-${{ matrix.language }}.zip generated_site
